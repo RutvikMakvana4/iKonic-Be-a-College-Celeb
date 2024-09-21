@@ -1,0 +1,2377 @@
+openapi: "3.0.2"
+info:
+  title: iKonic Social Media App
+  version: "1.0.0"
+  description: |
+    <img src="/logo/ikonic_logo.png" alt="iKonic logo" width="100" height="100"/>
+components:
+  # Authentication using bearer token
+  securitySchemes:
+    bearerAuth:
+      description: "#### Example: Bearer [TOKEN]"
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  # Response message
+  responses:
+    Success:
+      description: |
+        - success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: success
+
+    UnprocessableEntity:
+      description: |
+        - Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: validation error
+
+    ConflictError:
+      description: |
+        - ConflictError
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: conflict error
+
+    BadRequestError:
+      description: |
+        - bad request error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: bad request error
+
+    UnauthorizedError:
+      description: |
+        - Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Unauthorized
+
+    NotFoundError:
+      description: |
+        - NotFoundError
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Not Found
+
+paths:
+  # Auth
+  /auth/otp-verification:
+    post:
+      summary: OTP Verification
+      description: |
+        ```
+        type 1 : Register
+        type 2 : Login
+
+        Note - currently for phone number verification use static 7777 OTP for that.
+        ```
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: number
+                  example: 1
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+                otp:
+                  type: number
+                  example: 1111
+              required:
+                - countryCode
+                - phone
+                - otp
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /auth/update-phone-otp-verify:
+    post:
+      summary: Update Phone OTP Verification
+      description: |
+        ```
+        Note - currently for phone number verification use static 7777 OTP for that.
+        ```
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+                otp:
+                  type: number
+                  example: 1111
+              required:
+                - countryCode
+                - phone
+                - otp
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /auth/resend-otp:
+    post:
+      summary: Resend otp
+      description: |
+        ```
+          Note - currently for phone number verification use static 7777 OTP for that.
+        ```
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+              required:
+                - countryCode
+                - phone
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+
+  /auth/register:
+    post:
+      summary: Register
+      description: |
+        - User registration
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: Rutvik
+                lastName:
+                  type: string
+                  example: Makvana
+                email:
+                  type: string
+                  example: rutvik@mailinator.com
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+
+              required:
+                - firstName
+                - lastName
+                - email
+                - countryCode
+                - phone
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+
+  /auth/login:
+    post:
+      summary: Login
+      description: |
+        - login.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+              required:
+                - countryCode
+                - phone
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+
+  /auth/logout:
+    post:
+      summary: Logout
+      description: |
+        - logout from this device.
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deviceId:
+                  type: string
+                  example: SP1A.210812.016
+              required:
+                - deviceId
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /auth/refresh-token:
+    post:
+      summary: Refresh Token
+      description: |
+        - Refresh Token
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: eyJhbGciOiJSUzI1NiIsImtpZCI6I51Aa8hNbPVb3s2wNuQ
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  # Listing
+  /auth/interests:
+    get:
+      summary: Interests
+
+      tags:
+        - Auth
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /auth/sub-cultures:
+    get:
+      summary: Sub Cultures
+
+      tags:
+        - Auth
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /auth/cast-messages:
+    get:
+      summary: Get cast messages
+      description: |
+        ```
+        - type 3 -> Thank It Forward Cast
+        - type 4 -> Shout Out Cast
+        - type 5 -> Quick Cash Cast
+        - type 6 -> Creative Me Cast
+        - type 7 -> Tune In Mood list
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: integer
+            enum:
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Users Profile
+  /user/organizations:
+    get:
+      summary: Get searching organizations list
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+            example: Harvard
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /user/user-details:
+    get:
+      summary: Get user details
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/update-user:
+    put:
+      summary: Update user
+      description: |
+        **Status :**
+        ```
+        * 1 -> dateOfBirth
+        * 2 -> pronouns
+        * 3 -> collegeId 
+        * 3 -> collegeName
+        * 4 -> isAgree
+        * 5 -> bio
+        * 6 -> profilePicture
+        * 7 -> interests
+        * 8 -> subCultures
+        * 9 -> isAccountActive
+        * 10 -> docUpload
+        * 11 -> latitude & longitude
+
+        ```
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: 1
+                dateOfBirth:
+                  type: string
+                  example: "1991-01-23"
+                pronouns:
+                  type: string
+                  example: "He/Him/His"
+                collegeId:
+                  type: number
+                  example: 10247197
+                collegeName:
+                  type: string
+                  example: Harvard Business School Online (Boston, MA)
+                isAgree:
+                  type: boolean
+                  example: false
+                bio:
+                  type: string
+                  example: Passionate about helping businesses thrive online
+                profilePicture:
+                  type: string
+                  format: binary
+                interests:
+                  type: array
+                subCultures:
+                  type: array
+                isAccountActive:
+                  type: boolean
+                  example: false
+                docUpload:
+                  type: string
+                  format: binary
+                latitude:
+                  type: number
+                  example: 21.191060356141477
+                longitude:
+                  type: number
+                  example: 72.78591861664401
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/edit-profile:
+    put:
+      summary: Edit users profile
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profilePicture:
+                  type: string
+                  format: binary
+                email:
+                  type: string
+                  example: rutvik@mailinator.com
+                bio:
+                  type: string
+                  example: Passionate about helping businesses thrive online
+                pronouns:
+                  type: string
+                  example: "He/Him/His"
+                interests:
+                  type: array
+                subCultures:
+                  type: array
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/update-phone-number:
+    put:
+      summary: Update phone number
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  example: "+91"
+                phone:
+                  type: string
+                  example: 6355423641
+              required:
+                - countryCode
+                - phone
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /user/user-profile-details:
+    get:
+      summary: Get user profile details
+      description: |
+        ```
+        type: 1 - User
+        type: 2 - Friend
+          
+        accountStatus: 1 - public profile 
+        accountStatus: 2 - private profile 
+
+        requestStatus : 
+            0 - none 
+            1 - requested
+            2 - confirm
+
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/user-memory-lane:
+    get:
+      summary: Get user memory lane
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/memory-lane-month-images:
+    get:
+      summary: Get memorylane all images month vise
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 65ee9907ad73dd3dc52e845d
+        - in: query
+          name: date
+          schema:
+            type: number
+            example: 1710137041
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/profile-pic-view:
+    get:
+      summary: User profile picture view
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/followers:
+    get:
+      summary: Get User follower deatils list
+      description: |
+        ```
+        - userType 1 -> User
+        - userType 2 -> Friend
+
+        - type 1 -> follower list
+        - type 2 -> following list
+        - type 3 -> thank you list
+        - type 4 -> shout out list
+        - type 5 -> Secretly admire list
+
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: userType
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/remove-follower/{followerId}:
+    post:
+      summary: Remove user follower
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: path
+          name: followerId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/block-user:
+    post:
+      summary: Block and Unblock user
+      description: |
+        ```
+        - type 1 -> Block User
+        - type 2 -> Unblock User
+
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /user/block-user/list:
+    get:
+      summary: Get block user list
+      description: |
+
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Friends
+  /friend/search-friends:
+    post:
+      summary: Search Friends
+      description: |
+        ```
+
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collegeId:
+                  type: array
+                  example:
+                    [
+                      { "id": 4004032, "name": "Zoe Barnum High (Eureka, CA)" },
+                      {
+                        "id": 4665784,
+                        "name": "A Maceo Smith High School (Dallas, TX)",
+                      },
+                    ]
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /friend/follow-friend:
+    post:
+      summary: Follow and unfollow friend
+      description: |
+        ```
+        type: 1 - follow friend
+        type: 2 - Unfollow friend
+             
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /friend/follow-request:
+    post:
+      summary: Confirm / Deny follow request
+      description: |
+        ```
+        type: 1 - Confirm follow request 
+        type: 2 - Deny follow request
+             
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+        - in: query
+          name: friendId
+          schema:
+            type: string
+            example: 65e94827aa7ffae2187dc740
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /friend/followers/{friendId}:
+    get:
+      summary: Get follower deatils list
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      parameters:
+        - in: path
+          name: friendId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /friend/secretly-admire/{friendId}:
+    post:
+      summary: Secretly Admire
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      parameters:
+        - in: path
+          name: friendId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /friend/suggested-friends:
+    get:
+      summary: Suggested friends
+      security:
+        - bearerAuth: []
+      tags:
+        - Friends
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Cast
+  /cast/create-cast:
+    post:
+      summary: Create Cast
+      description: |
+        ```
+        type : 1 -> Photo Cast
+        type : 2 -> Flash Cast
+        type : 3 -> Thank It Forward Cast
+        type : 4 -> Shout Out Cast
+        type : 5 -> Quick Cash Cast
+        type : 6 -> Creative Me Cast
+
+        --------------------------------
+
+        docType : 1 -> image
+        docType : 2 -> video 
+        docType : 3 -> audio  
+        docType : 4 -> document
+        ```
+      tags:
+        - Cast
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                docType:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+                uploadFile:
+                  type: string
+                  format: binary
+                uploadFileName:
+                  type: string
+                  default: 11
+                uploadFiles:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                location:
+                  type: string
+                  example: Morrison Rd, Lakewood, United States
+                latitude:
+                  type: string
+                  example: 20.5937
+                longitude:
+                  type: string
+                  example: 78.9629
+                tagFriend:
+                  type: string
+                  example: 65ee996bad73dd3dc52e846d
+                describeCast:
+                  type: string
+                  example: The more regularly and the more deeply you meditate the sooner you will find yourself acting always from a center of peace.
+                isNominateForTrendz:
+                  type: boolean
+                thankYouMessage:
+                  type: string
+                  example: 65f7e717e0fa28318e491c89
+                shoutOutMessage:
+                  type: string
+                  example: 65f7e717e0fa28318e491c95
+                service:
+                  type: string
+                  example: 65f7e717e0fa28318e491c9f
+                frequency:
+                  type: string
+                  example: Hourly
+                amount:
+                  type: number
+                  example: 21
+                feedbackRequest:
+                  type: string
+                  example: 65f7e717e0fa28318e491cae
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /cast/delete-cast/{castId}:
+    delete:
+      summary: Delete cast
+      description: |
+        - Delete your cast from memory lane
+      tags:
+        - Cast
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 63bd4dcff9e5e2f0107cb2f6
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+
+  /cast/view-cast/{castId}:
+    get:
+      summary: View Cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Cast
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /cast/edit-cast/{castId}:
+    put:
+      summary: Edit Cast
+      description: |
+        ```
+        type : 1 -> Photo Cast
+        type : 2 -> Flash Cast
+        type : 3 -> Thank It Forward Cast
+        type : 4 -> Shout Out Cast
+        type : 5 -> Quick Cash Cast
+        type : 6 -> Creative Me Cast
+
+        --------------------------------
+
+        docType : 1 -> image
+        docType : 2 -> video 
+        docType : 3 -> audio  
+        docType : 4 -> document
+        ```
+      tags:
+        - Cast
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: string
+                  example: Morrison Rd, Lakewood, United States
+                latitude:
+                  type: string
+                  example: 20.5937
+                longitude:
+                  type: string
+                  example: 78.9629
+                tagFriend:
+                  type: string
+                  example: 65ee996bad73dd3dc52e846d
+                describeCast:
+                  type: string
+                  example: The more regularly and the more deeply you meditate the sooner you will find yourself acting always from a center of peace.
+                isNominateForTrendz:
+                  type: boolean
+                thankYouMessage:
+                  type: string
+                  example: 65f7e717e0fa28318e491c89
+                shoutOutMessage:
+                  type: string
+                  example: 65f7e717e0fa28318e491c95
+                service:
+                  type: string
+                  example: 65f7e717e0fa28318e491c9f
+                frequency:
+                  type: string
+                  example: Hourly
+                amount:
+                  type: number
+                  example: 21
+                feedbackRequest:
+                  type: string
+                  example: 65f7e717e0fa28318e491cae
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Buzz landing page
+  /buzz/buzz-page:
+    get:
+      summary: Buzz landing page
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/like-cast/{castId}:
+    post:
+      summary: Like Cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/comment-cast/{castId}:
+    post:
+      summary: Comment in Cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  example: Wow, great place to visit
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/comment-list:
+    get:
+      summary: Comment listing for one cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: castId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/rating-cast/{castId}:
+    post:
+      summary: Rating in Cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  example: 5
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/search-followers:
+    get:
+      summary: Search followers
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/share-cast:
+    post:
+      summary: Share cast
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                friends:
+                  type: array
+                  example:
+                    [
+                      { "_id": 65ee996bad73dd3dc52e846d },
+                      { "_id": 65ee9ed1a13cda40b6652522 },
+                    ]
+                isShareWithAll:
+                  type: boolean
+
+      parameters:
+        - in: query
+          name: castId
+          schema:
+            type: string
+            example: 65fa8e0caddab48d19624caf
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /buzz/view-cast-count/{castId}:
+    post:
+      summary: View cast for count
+      security:
+        - bearerAuth: []
+      tags:
+        - Buzz
+
+      parameters:
+        - in: path
+          name: castId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Trendz
+  /trendz/:
+    get:
+      summary: Trendz
+      security:
+        - bearerAuth: []
+      tags:
+        - Trendz
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Tune In
+  /tune-in/create-mood:
+    post:
+      summary: Tune In
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mood:
+                  type: string
+                  example: 65f7e717e0fa28318e491cb2
+                customizeMood:
+                  type: string
+                  example: Go to temple
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/my-tune-in/views:
+    get:
+      summary: My tune in views
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: tuneInId
+          schema:
+            type: string
+            example: 65e94806aa7ffae2187dc733
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/unlock-profile/{viewerId}:
+    post:
+      summary: Unlock this profile
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: path
+          name: viewerId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/list:
+    get:
+      summary: Tune in listing
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/friend-tune-in/{tuneInId}:
+    get:
+      summary: View friend Tune In
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: path
+          name: tuneInId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/view/{tuneInId}:
+    post:
+      summary: View Tune In
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: path
+          name: tuneInId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/delete-tune-in/{tuneInId}:
+    delete:
+      summary: Delete Tune In
+      security:
+        - bearerAuth: []
+      tags:
+        - Tune In
+
+      parameters:
+        - in: path
+          name: tuneInId
+          required: true
+          schema:
+            type: string
+            example: 659e45cbd2d793f9ca90420b
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /tune-in/total-students:
+    get:
+      summary: Map user list
+      security:
+        - bearerAuth: []
+      tags:
+        - Map
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Profile Options
+  /options/report-issue:
+    post:
+      summary: Report issue
+      tags:
+        - Profile Options
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                issue:
+                  type: string
+                  example: Performance Degradation - Lag Issues in Application
+                describeIssue:
+                  type: string
+                  example: This problem is adversely affecting the overall user experience, causing delays in response times
+
+              required:
+                - issue
+                - describeIssue
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /options/feedback:
+    post:
+      summary: Feedback
+      tags:
+        - Profile Options
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rateExperience:
+                  type: string
+                  example: 5
+                describeExperience:
+                  type: string
+                  example: The application exhibits several positive aspects, contributing to a generally satisfactory user experience.
+
+              required:
+                - rateExperience
+                - describeExperience
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /options/privacy-and-security:
+    post:
+      summary: Privacy & Security
+      description: |
+        ```
+        accountStatus: 1 -> Public profile
+        accountStatus: 2 -> Private profile
+        ```
+      tags:
+        - Profile Options
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountStatus:
+                  type: string
+                  example: 1
+                manageNotifications:
+                  type: boolean
+                  example: false
+                isParticipant:
+                  type: boolean
+                  example: false
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /options/delete-account:
+    delete:
+      summary: Delete Account
+      tags:
+        - Profile Options
+      security:
+        - bearerAuth: []
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  # Notification
+  /notification/history:
+    get:
+      summary: Notification history
+      description: |
+        ```
+          status:
+            1 - started following you.
+            2 - liked your cast
+            3 - commented on your cast.
+            4 - You are secretly admire by
+            5 - rated your Creativity cast.
+            6 - tagged you on Thank You cast.
+            7 - tagged you on Shout Out cast.
+            8 - requested to follow you.
+            9 - Your cast is nominated for Trendz
+            
+          type : 
+            0 - none 
+            1 - requested
+            2 - confirm
+        ```
+      tags:
+        - Notification
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /notification/readAt/{notificationId}:
+    post:
+      summary: Notification read at
+      tags:
+        - Notification
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: notificationId
+          required: true
+          schema:
+            type: string
+            example: 63bd4dcff9e5e2f0107cb2f6
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /notification/un-read:
+    get:
+      summary: Un read notification count
+      tags:
+        - Notification
+      security:
+        - bearerAuth: []
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  # iKon Board
+  /ikon-board/user-ikon-details:
+    get:
+      summary: Get user details for ikon board
+      description: |
+        ```
+          type: 1 - Most Popular iKon
+          type: 2 - Most Trending Creator iKon
+          type: 3 - Most Talented iKon
+          type: 4 - Most Stylish iKon
+        ```
+      tags:
+        - iKon Board
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /ikon-board/user-point-summary:
+    get:
+      summary: Get user point summary
+      description: |
+        ```
+          type: 1 - Most Popular iKon
+          type: 2 - Most Trending Creator iKon
+          type: 3 - Most Talented iKon
+          type: 4 - Most Stylish iKon
+        ```
+      tags:
+        - iKon Board
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+        - in: query
+          name: userId
+          required: true
+          schema:
+            type: string
+            example: 65ee9907ad73dd3dc52e845d
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  # FCM Token register
+  /fcm/token-register:
+    post:
+      deprecated: false
+      description: Register device token.
+      summary: Register token
+
+      tags:
+        - FCM TOKEN
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: def5020075819e4748adefe1f860566c3b41437f2b7e396db025b4d384e6b5db5911a3cfc22
+                deviceId:
+                  type: string
+                  example: SP1A.210812.016
+                deviceType:
+                  type: string
+                  example: iOS
+              required:
+                - token
+                - deviceId
+                - deviceType
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /style-ikon/participate:
+    post:
+      description: Participate in season's intra college round
+      summary: Participate in season's intra college round
+      tags:
+        - Style Ikon
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - images
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /style-ikon/participate/like-dislike:
+    post:
+      description: Like/Dislike Participants
+      summary: Like/Dislike Participants
+      tags:
+        - Style Ikon
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: participantId
+          required: true
+          schema:
+            type: string
+            example: 64d1e688291421a69005a5f3
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /style-ikon/participants:
+    get:
+      description: |
+        - 1 - Intra College Round Participants 2 - National College Round Participants
+      summary: Get Participants
+      tags:
+        - Style Ikon
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: participantId
+          required: false
+          schema:
+            type: string
+            example: 64d1e688291421a69005a5f3
+        - in: query
+          required: false
+          name: search
+          schema:
+            type: string
+            example: lorem
+        - in: query
+          name: perPage
+          required: false
+          schema:
+            type: number
+            example: 10
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /style-ikon/leading-universities:
+    get:
+      description: Get Leading University List
+      summary: Get Leading University List
+      tags:
+        - Style Ikon
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /style-ikon/national-round-participants:
+    get:
+      description: Get National Round Participants
+      summary: Get National Round Participants
+      deprecated: true
+      tags:
+        - Style Ikon
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          required: false
+          name: search
+          schema:
+            type: string
+            example: lorem
+        - in: query
+          name: perPage
+          required: false
+          schema:
+            type: number
+            example: 10
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  # Chat
+  /chat/friends-list:
+    get:
+      summary: Chat friends list
+      security:
+        - bearerAuth: []
+      tags:
+        - Chat
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+
+  /chat/messages:
+    get:
+      summary: Chat message history
+      description: |
+        ```
+          type 1 - Chat
+          type 2 - Cast
+          type 3 - Image
+          type 4 - Video
+          
+        ```
+      security:
+        - bearerAuth: []
+      tags:
+        - Chat
+
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+        - in: query
+          name: receiverId
+          schema:
+            type: string
+            example: 65ee996bad73dd3dc52e846d
+
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"

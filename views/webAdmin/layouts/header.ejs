@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- theme meta -->
+    <meta name="theme-name" content="Harage" />
+
+    <title>Harage Admin</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/harage.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Sweet alert css url  -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    <link href="/adminWeb/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <link href="/adminWeb/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+        rel="stylesheet">
+    <link href="/adminWeb/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <link href="/adminWeb/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <link href="/adminWeb/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="/adminWeb/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="/adminWeb/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/adminWeb/css/style.css" rel="stylesheet">
+
+    <style>
+        .nav-header .brand-logo a b img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header d-flex justify-content-center align-items-center position-fixed top-0"
+            style="background-color: #292727; z-index: 999;">
+            <div class="brand-logo w-100">
+                <a href="/webAdmin/dashboard" class="p-0">
+                    <b class="logo-abbr"><img src="/logo/Crown.png" alt="" height="50"> </b>
+                    <span class="brand-title">
+                        <h2 class="m-0 p-0" style="text-align: center; color: white;">I K O N I C</h2>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header position-fixed top-0">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="/adminWeb/img/covor.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li><a href="/webAdmin/Logout" onclick="logoutAdmin(event)"><i
+                                                    class="fa fa-sign-out" aria-hidden="true"></i>
+                                                <span><b>Logout</b></span></a>
+                                        </li>
+                                        <li><a href="/webAdmin/change-password">🔒&nbsp;
+                                                <span><b>Change Password</b></span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar position-fixed">
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="/webAdmin/dashboard" class="" aria-expanded="false">
+                        <i class="fa fa-dashboard"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/webAdmin/quiz/add-quiz" class="" aria-expanded="false">
+                        <i class="fa fa-vcard"></i>
+                        <span class="nav-text">Add Quiz</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body" style="margin-top: 80px;">

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Harage Admin</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/harage.png">
+    <link href="/adminWeb/css/style.css" rel="stylesheet">
+    <style>
+        .toggle-password-eye {
+            float: right;
+            top: -30px;
+            right: 14px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        label.error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .form-select {
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid #f5f5f5;
+            padding-left: 0;
+            color: #7A88A1;
+            font-size: medium;
+        }
+
+        .form-control {
+            font-size: medium;
+        }
+
+        .form-select:focus {
+            box-shadow: none;
+        }
+
+        .card .card-body {
+            padding: 0 1.81rem;
+        }
+    </style>
+
+</head>
+
+<body class="vh-100">
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body">
+                                <div class="text-center pt-3">
+                                    <img src="/logo/ikonic_logo.png" width="25%">
+                                </div>
+                               
+                                        <form class="admin mt-5 mb-5 login-input" method="post">
+                                            <div class="form-group">
+                                                <input class="form-control" type="email" name="email"
+                                                    placeholder="Email">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control" placeholder="Password" required>
+                                            </div>
+                                            <button type="submit" style="background-color: #292727;"
+                                                class="btn login-form__btn submit w-100">Sign
+                                                In</button>
+                                        </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+    <script src="/adminWeb/plugins/common/common.min.js"></script>
+    <script src="/adminWeb/js/custom.min.js"></script>
+    <script src="/adminWeb/js/settings.js"></script>
+    <script src="/adminWeb/js/gleek.js"></script>
+    <script src="/adminWeb/js/styleSwitcher.js"></script>
+    <script src="/adminWeb/js/validation.js"></script>
+
+    <script>
+
+        // $("#error").show().delay(1500).fadeOut();
+
+        $(document).ready(function () {
+
+            const togglePasswordEye = '<i class="fa fa-eye toggle-password-eye"></i>';
+            const togglePasswordEyeSlash = '<i class="fa fa-eye-slash toggle-password-eye"></i>';
+
+            $(togglePasswordEyeSlash).insertAfter('input[type=password]');
+            $('input[type=password]').addClass('hidden-pass-input');
+
+            $('body').on('click', '.toggle-password-eye', function (e) {
+                let password = $(this).prev('.hidden-pass-input');
+
+                if (password.attr('type') === 'password') {
+                    password.attr('type', 'text');
+                    $(this).addClass('fa-eye').removeClass('fa-eye-slash');
+                } else {
+                    password.attr('type', 'password');
+                    $(this).addClass('fa-eye-slash').removeClass('fa-eye');
+                }
+            });
+
+            $(".admin").validate({
+                rules: {
+
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: "required",
+                },
+                messages: {
+                    email: {
+                        required: "Email is required",
+                        email: "Please enter a valid email address"
+                    },
+                    password: "Password is required",
+                },
+                errorClass: "error",
+                errorElement: "label",
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

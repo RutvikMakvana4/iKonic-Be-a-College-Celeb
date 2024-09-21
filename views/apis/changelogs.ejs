@@ -1,0 +1,624 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>API Changelogs | IKONIC-SOCIAL-MEDIA-APP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/logo/ikonic_logo.png"
+    />
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style type="text/css">
+      body {
+        margin-top: 20px;
+        font-size: 0.9rem;
+      }
+
+      .text-muted {
+        color: #8492a6 !important;
+      }
+
+      .bg-light {
+        background-color: #add8e624 !important;
+      }
+
+      ul {
+        list-style-position: outside;
+      }
+
+      .text-success {
+        color: #0f84ab !important;
+      }
+
+      .links {
+        color: #e83e8c;
+      }
+    </style>
+  </head>
+
+  <body data-new-gr-c-s-check-loaded="14.1050.0" data-gr-ext-installed="">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css"
+      integrity="sha256-nwNjrH7J9zS/Ti4twtWX7OsC5QdQHCIKTv5cLMsGo68="
+      crossorigin="anonymous"
+    />
+    <div class="container">
+      <div class="row justify-content-center">
+        <h3 class="pt-4 pb-4 pl-3">IKONIC SOCIAL MEDIA APP</h3>
+        <hr />
+        <br />
+        <div>
+          <img src="/logo/ikonic_logo.png" height="95" alt="IKONIC" />
+        </div>
+        <div class="col-lg-12 col-md-12 col-12 mx-auto my-auto">
+          <b>Base Url: </b>
+          <a
+            class="links"
+            href="<%= process.env.APP_URL %>/api/v1"
+            target="_blank"
+          >
+            <%= process.env.APP_URL %>/api/v1
+          </a>
+          <br />
+          <b>Swagger Url: </b>
+          <a
+            class="links"
+            href="<%= process.env.APP_URL %>/api/documentation"
+            target="_blank"
+          >
+            <%= process.env.APP_URL %>/api/documentation
+          </a>
+          <br />
+
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 17th April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /chat/friends-list </code><br />
+                  ✓ Chat friends list
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /chat/messages </code><br />
+                  ✓ Chat message history
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 15th April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /tune-in/total-students </code><br />
+                  ✓ Map users list
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /friend/suggested-friends </code><br />
+                  ✓ Suggested friends
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 11th April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /style-ikon/Participants </code><br />
+                  ✓ Get Participants list(Merge national-round-participants and intra-clg-participants list)
+                </li>
+              </ul>
+              <span class="badge badge-primary">Changes</span>
+              <ul>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /tune-in/create-mood</code><br />
+                  ✓ Create tune in
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /tune-in/list</code><br />
+                  ✓ Tune in listing
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 4th April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>DELETE /tune-in/delete-tune-in/{tuneInId} </code><br />
+                  ✓ Delete Tune in
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 3rd April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /style-ikon/national-round-participants </code><br />
+                  ✓ Get National Round Participants list
+                </li>
+              </ul>
+             
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 2nd April 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /style-ikon/intra-clg-participants </code><br />
+                  ✓ Get Intra College Round Participants list
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /style-ikon/participate </code><br />
+                  ✓ Participate in season's intra college round
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /style-ikon/participate/like-dislike </code><br />
+                  ✓ Like/Dislike Participants
+                </li>
+              </ul>
+              <span class="badge badge-primary">Changes</span>
+              <ul>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/user-details</code><br />
+                  ✓ Get User Details(add currentSeason Details)
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 29th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>DELETE /cast/delete-cast/{castId} </code><br />
+                  ✓ Delete cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /cast/view-cast/{castId} </code><br />
+                  ✓ View cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>PUT /cast/edit-cast/{castId} </code><br />
+                  ✓ Edit cast
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 26th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /buzz/comment-list </code><br />
+                  ✓ Comment listing for one cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /buzz/search-followers </code><br />
+                  ✓ Search followers
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /buzz/view-cast-count/{castId} </code><br />
+                  ✓ View cast for count
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /tune-in/friend-tune-in/{tuneInId} </code><br />
+                  ✓ View friend tune in
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 21th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/followers </code><br />
+                  ✓ Get user follower details list
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /user/remove-follower/{followerId} </code><br />
+                  ✓ Remove user follower
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /user/block-user </code><br />
+                  ✓ Block and Unblock user
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/block-user/list </code><br />
+                  ✓ Get Block users list
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 18th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /friend/follow-request </code><br />
+                  ✓ Confirm / Deny follow request
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /friend/followers/{friendId} </code><br />
+                  ✓ Get follower details list
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 15th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /notification/history </code><br />
+                  ✓ Notification history
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /notification/readAt/{notificationId} </code><br />
+                  ✓ Notification read at
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /notification/un-read</code><br />
+                  ✓ Un read notification count
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 13th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /options/report-issue </code><br />
+                  ✓ Report issue
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /options/feedback </code><br />
+                  ✓ Feedback
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /options/privacy-and-security </code><br />
+                  ✓ Privacy & Security
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 12th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /tune-in/ </code><br />
+                  ✓ Tune in
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /tune-in/my-tune-in/views </code><br />
+                  ✓ My Tune in views
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /tune-in/unlock-profile/{viewerId} </code><br />
+                  ✓ Unlock this profile
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /tune-in/list </code><br />
+                  ✓ Tune in listing
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /tune-in/view/{tuneInId} </code><br />
+                  ✓ View Tune in
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 8th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /cast/create-cast </code><br />
+                  ✓ Create all casts
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /buzz/buzz-page </code><br />
+                  ✓ Buzz landing page
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /buzz/like-cast/{castId} </code><br />
+                  ✓ Like cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /buzz/comment-cast/{castId} </code><br />
+                  ✓ Comments in cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /buzz/rating-cast/{castId} </code><br />
+                  ✓ Rating in cast
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /trendz/ </code><br />
+                  ✓ Trendz
+                </li>
+              </ul>
+            </div>
+          </div>
+            <div class="row d-flex">
+              <div class="col-lg-2">
+                <h5 class="mt-4"><b> 7th March 2024 </b></h5>
+              </div>
+              <div class="col-lg-10 saprater">
+                <h6 class="mt-4">
+                  <span class="p-2 bg-light shadow rounded text-success">Version 1.0</span>
+                </h6>
+                <span class="badge badge-success">New Additions</span>
+                <ul class="mt-2">
+                  <li class="text-muted ml-3 mb-2">
+                    <code>GET /auth/cast-messages </code><br />
+                    ✓ Cast messages
+                </ul>
+              </div>
+            </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 6th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /friend/follow-friend </code><br />
+                  ✓ Follow and Unfollow friends
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /friend/followers/{friendId} </code><br />
+                  ✓ Get user followers profile details
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /friend/secretly-admire/{friendId} </code><br />
+                  ✓ Secretly admire
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>PUT /user/update-phone-number </code><br />
+                  ✓ User phone number
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/update-phone-otp-verify </code><br />
+                  ✓ Update phone OTP verify
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 4th March 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>PUT /user/edit-profile </code><br />
+                  ✓ Edit Users profile
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /auth/user-profile-details </code><br />
+                  ✓ Get user profile details
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/user-memory-lane </code><br />
+                  ✓ Get user memory lane photos
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/profile-pic-view </code><br />
+                  ✓ User profile picture view
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /friend/search-friends </code><br />
+                  ✓ Search friends
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 28th Feb 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /user/organizations </code><br />
+                  ✓ Get organizations list
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /auth/sub-cultures </code><br />
+                  ✓ Sub Cultures
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>GET /auth/interests </code><br />
+                  ✓ Interests
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>PUT /user/update-user </code><br />
+                  ✓ Update user
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /user/user-details </code><br />
+                  ✓ Get User Details
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="col-lg-2">
+              <h5 class="mt-4"><b> 27th Feb 2024 </b></h5>
+            </div>
+            <div class="col-lg-10 saprater">
+              <h6 class="mt-4">
+                <span class="p-2 bg-light shadow rounded text-success"
+                  >Version 1.0</span
+                >
+              </h6>
+              <span class="badge badge-success">New Additions</span>
+              <ul class="mt-2">
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/otp-verification </code><br />
+                  ✓ OTP Verification
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/resend-otp </code><br />
+                  ✓ Resend OTP
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/register </code><br />
+                  ✓ Register
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/login </code><br />
+                  ✓ Login
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/logout </code><br />
+                  ✓ Logout
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /auth/refresh-token </code><br />
+                  ✓ Refresh token
+                </li>
+                <li class="text-muted ml-3 mb-2">
+                  <code>POST /fcm/token-register </code><br />
+                  ✓ Register token
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

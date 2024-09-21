@@ -1,0 +1,9 @@
+node_modules
+.env
+
+public/usersProfilePicture
+public/cast
+public/thumbnail
+public/participants
+public/photoCast
+public/quizImages

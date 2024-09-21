@@ -1,0 +1,235 @@
+<%- include("../layouts/header.ejs") %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+
+    <style>
+        .iti {
+            width: 100%;
+        }
+
+        .alert-danger {
+            background: #e52828;
+            border-color: #e52828;
+            color: #ffffff;
+        }
+
+        h4 a {
+            color: #000000;
+        }
+
+        h4 a:hover {
+            color: #000;
+            text-decoration: none;
+        }
+
+
+        .button {
+            position: relative;
+            padding: 8px 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .button:active {
+            background: #80DEE4;
+        }
+
+        .button__text {
+            transition: all 0.2s;
+        }
+
+        .button--loading .button__text {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .button--loading::after {
+            content: "";
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 4px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s ease infinite;
+        }
+
+        .iti {
+            width: 100%;
+        }
+
+        .form-control {
+            border-radius: 0;
+            box-shadow: none;
+            height: 30px;
+            min-height: 35px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            margin-left: 9px;
+        }
+
+        ol,
+        li {
+            list-style-type: revert-layer !important;
+        }
+
+        ol>li {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 col-xxl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" style="display: flex; align-items: center; justify-content: left;"><a
+                                href="/webAdmin/dashboard"> <i class="fa fa-long-arrow-left"
+                                    style="font-size: 26px; margin-right: 10px;"></i></a>Add Quiz</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form id="quiz" method="post" enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Question Image :</label>
+                                        <input type="file" name="image" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Question:</label>
+                                        <input type="text" name="question" class="form-control" placeholder="Question">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <p>Options:</p>
+                                        <ol type="A">
+                                            <li>
+                                                <input type="text" name="options[]" required>
+                                                <input class="ms-2" type="radio" name="isCorrect" value="0"> Correct
+                                                Answer
+                                            </li>
+                                            <li>
+                                                <input type="text" name="options[]" required>
+                                                <input class="ms-2" type="radio" name="isCorrect" value="1"> Correct
+                                                Answer
+                                            </li>
+                                            <li>
+                                                <input type="text" name="options[]" required>
+                                                <input class="ms-2" type="radio" name="isCorrect" value="2"> Correct
+                                                Answer
+                                            </li>
+                                            <li>
+                                                <input type="text" name="options[]" required>
+                                                <input class="ms-2" type="radio" name="isCorrect" value="3"> Correct
+                                                Answer
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <button type="submit" id="submit_btn" class="btn btn-dark">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script
+            src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+        <script>
+            $('#manage-user').addClass('mm-active')
+            $('#pageTitle').text('Add User');
+
+            $("#success").show().delay(5000).fadeOut();
+            $("#error").show().delay(5000).fadeOut();
+
+            $(document).ready(function () {
+                $("#quiz").validate({
+                    rules: {
+                        image: {
+                            required: true,
+                        },
+                        question: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        question: {
+                            required: "Question is required."
+                        },
+                        image: {
+                            required: "Please select an image file.",
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid').removeClass(validClass);
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid').addClass(validClass);
+                    },
+                    submitHandler: function (form) {
+                        var formData = new FormData(form);
+                        var options = formData.getAll('options[]');
+                        var isCorrectIndex = parseInt(formData.get('isCorrect'));
+                        var question = formData.get('question');
+                        var image = formData.get('image')
+
+                        var formattedOptions = options.map(function (option, index) {
+                            return {
+                                option: option,
+                                isCorrect: index === isCorrectIndex
+                            };
+                        });
+
+                        let finalData = {
+                            image: image,
+                            question: question,
+                            options: formattedOptions
+                        }
+
+                        console.log("image", image)
+                        console.log('Question:', question);
+                        console.log('Options:', formattedOptions);
+
+                        // return false;
+
+                        $.ajax({
+                            type: 'POST',
+                            url: `<%= process.env.APP_URL %>/webAdmin/quiz/add-quiz`,
+                            data: finalData,
+                            success: function (response) {
+                                console.log(response, "res");
+                                window.location.href = '<%= process.env.APP_URL %>/webAdmin/dashboard';
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            });
+
+        </script>
+
+        <%- include("../layouts/footer.ejs") %>
